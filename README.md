@@ -1,76 +1,79 @@
-<a href="https://concrete.com.br/"><img src=".github/concrete_symbol.png" width="180px" align="right" /></a>
+# Resolución Desafio Java Concrete
 
-# Desafio Java Concrete
-
-Desafio técnico para evaluar el conocimiento de los aspirantes a unirse al equipo de **Backend**.
+Desafio técnico para evaluar el conocimiento de los aspirantes a unirse al equipo de Backend.
+Enunciado del desafío: [Enlace al desafío](https://github.com/concretesolutions/java-recruiting-hsa#el-desafio)
 
 ## Contenido
-- [El Desafio](#el-desafio)
-    - [Escenario](#escenario)
-    - [APIs](#apis)
-    - [Features](#features)
-    - [Puntos a Considerar](#puntos-a-considerar)
-- [¿Qué nos Gustaría Ver?](#qué-nos-gustaría-ver)
-    - [Deseables](#deseables)
-    - [Stack/Pool de Tecnologías](#stackpool-de-tecnologías)
-- [Forma de Entrega](#forma-de-entrega)
-- [Importante](#importante)
+- [Instrucciones de Configuración](#instrucciones-de-configuración)
+  - [Requisitos Previos](#requisitos-previos)
+  - [Configuración](#configuración)
+- [Compilación y Ejecución](#compilación-y-ejecución)
+- [Acceso a la Aplicación](#acceso-a-la-aplicación)
+- [Endpoints de la API](#endpoints-de-la-api)
+- [Documentación de la API](#documentación-de-la-api)
+- [Dener Docker](#detener-el-contenedor-docker)
 
-## El Desafio
+## Instrucciones de Configuración
 
-### Escenario
-Recientemente te has unido a un equipo que esta desarrollando una aplicación mobile para una gran compañía de e-commerce.  
-Esta aplicación esta dirigida a dispositivos de **bajo rendimiento** hasta dispositivos con **gran poder de procesamiento**.  
-El cliente ya cuenta con un backend establecido que contiene todas las reglas e información de negocio, pero algunos sistemas dependen de **tecnologías legadas** que pueden ser **inestables**.    
-**Tu** eres responsable de construir la **API** que integrará con estos servicios y proveerá todas las informaciones que Mobile necesita.  
-Para las próximas iteraciones, el equipo va a trabajar en la **Pantalla de Início** y tu debes construir todo(s) los **endpoint(s)** que se requieran para integrar con los servicios y proveer la información para la pantalla.
+### Requisitos Previos
+- Java JDK 17 instalado
+- Maven instalado
+- Docker instalado
 
-### APIs
-Necesitarás consumir los siguientes servicios:
-- **Categorias**: [https://cs-hsa-api-categories-rest.herokuapp.com/docs](https://cs-hsa-api-categories-rest.herokuapp.com/docs)
-- **Cupones**: [https://cs-hsa-api-coupons-rest.herokuapp.com/docs](https://cs-hsa-api-coupons-rest.herokuapp.com/docs)
+### Configuración
 
-### Features
-El equipo Mobile necesita construir una pantalla de inicio que debe mostrar:
+1. Clona este repositorio en tu máquina local:
+```sh
+git clone https://github.com/ChristopherMontiel/concrete-java-challenge.git
+```
+ó
+```sh
+git clone git@github.com:ChristopherMontiel/concrete-java-challenge.git
+```
+2. Navega al directorio del proyecto:
+```sh
+cd concrete-java-challenge
+```
+## Compilación y Ejecución
+#### 1. Compila el proyecto usando Maven:
+```sh
+mvn clean install
+```
+#### 2. Crea la imagen Docker:
+```sh
+docker build -t javachallenge:1.0 .
+```
+#### 3. Ejecuta el contenedor Docker:
+```sh
+docker run --name java-challenge -p 8080:8080 javachallenge:1.0
+```
 
-- Carrusel con **Top 5** categorias.
-- Carrusel con cupones que no han expirado.
-- Tabla (Grid) con las categorias **restantes**.
-- Mobile **no** necesita de todas las imagenes del modelo de subcategorías, solamente la **imagen más pequeña**. Tu podrías tener que filtrar la respuesta, si tu quieres.
+## Acceso a la Aplicación
 
-### Puntos a Considerar
-- La API de Cupones es **inestable** y a veces demora en responder. ¿Qué podemos hacer para que este problema no se replique en otras capas? ¿Habrá algún patrón que nos ayude?
-- La API de Categorias responde un modelo complejo de manejar. ¿Qué podríamos hacer para simplificar este modelo y que las integraciones con su aplicación sean más sencillas?
+Accede a la aplicación en tu navegador o herramienta de cliente API en:
+http://localhost:8080
 
-## ¿Qué nos Gustaría Ver? 
-Eres libre para implementar la solución de la forma que consideres mejor, 
-pero debes considerar el escenario, objetivo, implicaciones de performance y stack/pool de tecnología propuesta abajo.
-- Nos enfocamos mucho en la **calidad** de nuestros proyectos y nos gustaría ver alguna estrategia aplicada. Puedes usar, por ejemplo, **Pruebas Unitárias**.
-- No queremos que la experiencia de usuario se vea afectada por el rendimiento de los servicios;
-- **Usted tiene 1 semana para completar el desafio**. Si necesitas mas tiempo, no hay problema, puede hablar con nosotros y veremos que podemos hacer :)
-- Documentación de como configurar y ejecutar el proyecto. Puede sobrescribir el **README.md** para eso.
+## Endpoints de la API
+- Todas las Categorias:  http://localhost:8080/api/v1/categories
+- Todos los Cupones:  http://localhost:8080/api/v1/coupons
+### Features del desafío:
+- Carrusel con Top 5 categorias:
+  http://localhost:8080/api/v1/categories/top
 
-### Deseables
-- Podría ser bueno una documentación de API. Sugerencia: [Swagger](https://swagger.io/).
-- Ejecutando con [Docker](https://www.docker.com/).
+- Carrusel con cupones que no han expirado:
+  http://localhost:8080/api/v1/coupons/valid
 
-### Stack/Pool de Tecnologías
-- **Java 8** o **superiores**.
-- Cualquier Framework Web. Sugerencia: [Spring Boot](https://spring.io/projects/spring-boot).
-- Cualquier API Client. Sugerencia: [Feign](https://github.com/OpenFeign/feign).
-- De preferencia [Gradle](https://gradle.org/) como sistema de compilación.
-- Tu eres libre para escoger librerias y frameworks de pruebas que mas te guste. Nuestra sugerencia es: [JUnit](https://junit.org/junit5/), [Mockito](https://site.mockito.org/).
+- Tabla (Grid) con las categorias restantes:
+  http://localhost:8080/api/v1/categories/remaining
 
----
+## Documentación de la API
 
-## Forma de Entrega
-Siga los siguientes pasos para implementar y enviar este desafío:
-- Haga un **Fork** a este repositorio. Puedes mirar esta guía para mayores informaciones: [Como hacer fork de un repositorio](https://help.github.com/en/articles/fork-a-repo).
-- Implemente el desafío.
-- Después de completar el desafío, realice un **Pull Request** a este repositorio, utilizando la interface de **Github**. [Creando un Pull Request](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork).
-- Si es posible, deja tu repositorio publico para hacer la revisión de código más sencilla.
+Acceda a la documentación de la API en:
+(http://localhost:8080/swagger-ui/index.html)
 
-## Importante
-**No** intente hacer un PUSH directo a ESTE repositorio!
-
----
+## Detener el Contenedor Docker:
+Si deseas detener y eliminar el contenedor Docker:
+```sh
+docker stop java-challenge
+docker rm java-challenge
+```
